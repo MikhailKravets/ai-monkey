@@ -17,3 +17,8 @@ weight_decay = 0.7
 
 epochs = 1300
 batch_size = 8
+
+
+# Calculation parameters
+
+multiplier = 50

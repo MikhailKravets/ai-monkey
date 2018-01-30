@@ -15,7 +15,8 @@ def truncate(hours, marks):
 
 
 @click.command()
-def run():
+@click.option('--dist', nargs=6, help='Discipline studying activity hours distribution')
+def run(dist):
     """
     Use this utility to check how trained neural network works.
     """
@@ -23,7 +24,7 @@ def run():
         saver = tf.train.import_meta_graph(f'{config.model_path}.meta')
         saver.restore(sess, config.model_path)
 
-        hours = list(map(lambda e: int(e), input("Write discipline hours distribution vector (e.g. 10 12 0 0 3 17): ").split()))
+        hours = list(map(lambda e: int(e), dist))
         hours = np.array(hours).reshape((1, len(hours)))
 
         graph = tf.get_default_graph()
@@ -34,8 +35,10 @@ def run():
         truncate(hours[0], marks)
         s = sum(marks)
         marks = ' '.join([str(round(v/s * 100 * config.multiplier) / 100) for v in marks])
+
         print()
-        print(marks)
+        print(f"For hours dist.: {' '.join([str(v) for v in hours[0]])}")
+        print(f"Calc. marks: {marks}")
 
 
 if __name__ == '__main__':

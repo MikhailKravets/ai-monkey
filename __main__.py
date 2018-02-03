@@ -13,6 +13,13 @@ from calc import truncate
 
 
 def network(sess, hours):
+    """
+    Neural network processor that calculates marks with the given hours
+
+    :param sess: uploaded tenforflow session
+    :param hours: list of hours distribution
+    :return: calculated marks
+    """
     hours = list(map(lambda e: int(e), hours))
     hours = np.array(hours).reshape((1, len(hours)))
 
@@ -27,6 +34,12 @@ def network(sess, hours):
 
 class Retriever:
     def __init__(self, network_session, output='output.xlsx'):
+        """
+        Class that extract marks from journal and write calculated marks to specific file
+
+        :param network_session: tensorflow session
+        :param output: output directory for created file
+        """
         self.__mark_cols = ['F', 'G', 'H', 'I', 'J', 'K', 'L']
         self.__mark_rows = [7, 52, 97, 142]
         self.__mark_total_col = 'O'
@@ -40,6 +53,11 @@ class Retriever:
         self.book = self.__init_workbook()
 
     def process(self, file_path: pathlib.Path):
+        """
+        Process *.xlsx file
+
+        :param file_path: path to file
+        """
         file = file_path.as_posix()
         try:
             f = openpyxl.load_workbook(file, data_only=True)
@@ -57,6 +75,9 @@ class Retriever:
             print(error)
 
     def save(self):
+        """
+        Save created file into disk
+        """
         self.book.save(self.output)
 
     def __init_workbook(self):
@@ -138,16 +159,16 @@ def iter_through(dir_: pathlib.Path):
 @click.option('--out', default='processed', help='Specify output directory. Otherwise it will save into processed/ directory')
 def run(in_, out):
     """
-    Retrieve data from xlsx files that are laid in given directory.
+    Retrieve data from xlsx files that are laid in given directory and write calculated marks into one file.
     First argument is .xlsx files directory; second is the directory with file name for file to output data in.
-
-    It uses pool with 4 processes to analyze files; so be careful when doing ``KeyboardInterrupt``
 
     *******
     Example
     *******
 
-    ``python retriever.py c:/container/ d:/data.csv``
+    .. code::
+
+        python ai-monkey c:/container/ d:/data.csv
 
     """
     if not os.path.exists(os.path.dirname(out)):

@@ -76,8 +76,8 @@ def build_network(x, y):
 
 
 def run():
-    input_, output = from_csv(config.train_data_path)
-    tx, ty, vx, vy = separate_data(input_, output, config.validation_proportion)
+    input_, output = from_csv(config.TRAIN_DATA_PATH)
+    tx, ty, vx, vy = separate_data(input_, output, config.VALIDATION_PROPORTION)
 
     dim_x, dim_y = input_.shape[1], output.shape[1]
 
@@ -87,10 +87,10 @@ def run():
     nn = build_network(x, y)
 
     reduction = tf.reduce_mean((y - nn) ** 2)
-    loss = reduction + config.weight_decay * tf.nn.l2_loss(nn)
+    loss = reduction + config.WEIGHT_DECAY * tf.nn.l2_loss(nn)
 
     global_step = tf.Variable(0, trainable=False)
-    lr = tf.train.exponential_decay(config.learn_rate, global_step, config.epochs, 0.9)
+    lr = tf.train.exponential_decay(config.LEARN_RATE, global_step, config.EPOCHS, 0.9)
     optimizer = tf.train.GradientDescentOptimizer(lr).minimize(loss, global_step)
 
     tf.summary.scalar('Validation', reduction)
@@ -98,18 +98,18 @@ def run():
     tf.summary.scalar('LearningRate', lr)
 
     merged = tf.summary.merge_all()
-    writer = tf.summary.FileWriter(f'{config.board_event_path}{int(time.time() * 1000)}', graph=tf.get_default_graph())
+    writer = tf.summary.FileWriter(f'{config.BOARD_EVENT_PATH}{int(time.time() * 1000)}', graph=tf.get_default_graph())
 
     with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
         saver = tf.train.Saver()
 
-        for step in tqdm.tqdm(range(config.epochs)):
-            for i in range(0, len(tx), config.batch_size):
-                sess.run([optimizer, loss], feed_dict={x: tx[i:i + config.batch_size], y: ty[i:i + config.batch_size]})
-                summary = sess.run(merged, feed_dict={x: tx[i:i + config.batch_size], y: ty[i:i + config.batch_size]})
+        for step in tqdm.tqdm(range(config.EPOCHS)):
+            for i in range(0, len(tx), config.BATCH_SIZE):
+                sess.run([optimizer, loss], feed_dict={x: tx[i:i + config.BATCH_SIZE], y: ty[i:i + config.BATCH_SIZE]})
+                summary = sess.run(merged, feed_dict={x: tx[i:i + config.BATCH_SIZE], y: ty[i:i + config.BATCH_SIZE]})
                 writer.add_summary(summary, step)
-        saver.save(sess, config.model_path)
+        saver.save(sess, config.MODEL_PATH)
 
 if __name__ == '__main__':
     run()

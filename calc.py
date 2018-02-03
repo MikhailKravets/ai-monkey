@@ -21,8 +21,8 @@ def run(dist):
     Use this utility to check how trained neural network works.
     """
     with tf.Session() as sess:
-        saver = tf.train.import_meta_graph(f'{config.model_path}.meta')
-        saver.restore(sess, config.model_path)
+        saver = tf.train.import_meta_graph(f'{config.MODEL_PATH}.meta')
+        saver.restore(sess, config.MODEL_PATH)
 
         hours = list(map(lambda e: int(e), dist))
         hours = np.array(hours).reshape((1, len(hours)))
@@ -34,7 +34,7 @@ def run(dist):
         marks = sess.run(nn, feed_dict={x: hours})[0]
         truncate(hours[0], marks)
         s = sum(marks)
-        marks = ' '.join([str(round(v/s * 100 * config.multiplier) / 100) for v in marks])
+        marks = ' '.join([str(round(v / s * 100 * config.MULTIPLIER) / 100) for v in marks])
 
         print()
         print(f"For hours dist.: {' '.join([str(v) for v in hours[0]])}")

@@ -91,8 +91,8 @@ def run(in_, out):
     """
     try:
         with tf.Session() as sess:
-            saver = tf.train.import_meta_graph(f'{config.model_path}.meta')
-            saver.restore(sess, config.model_path)
+            saver = tf.train.import_meta_graph(f'{config.MODEL_PATH}.meta')
+            saver.restore(sess, config.MODEL_PATH)
             for v in tqdm.tqdm(list(iter_through(pathlib.Path(in_)))):
                 process(v.as_posix(), sess, pathlib.Path(out).as_posix(), v.name)
         print(f"Data processed")

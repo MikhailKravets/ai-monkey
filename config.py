@@ -1,24 +1,24 @@
 
 # System parameters
 
-board_event_path = 'tmp/log'
-train_data_path = 'data.csv'
-model_path = 'model/network'
+BOARD_EVENT_PATH = 'tmp/log'
+TRAIN_DATA_PATH = 'data.csv'
+MODEL_PATH = 'model/network'
 
 
 # Learning parameters
 
-validation_proportion = 0.15
+VALIDATION_PROPORTION = 0.15
 
-learn_rate = 0.1
-learning_decay_rate = 0.9
+LEARN_RATE = 0.1
+LEARNING_DECAY = 0.9
 
-weight_decay = 0.7
+WEIGHT_DECAY = 0.7
 
-epochs = 1300
-batch_size = 8
+EPOCHS = 1300
+BATCH_SIZE = 8
 
 
 # Calculation parameters
 
-multiplier = 50
+MULTIPLIER = 50

@@ -88,26 +88,24 @@ class Retriever:
         ws.column_dimensions['B'].width = 24
 
         self.__set_cell(ws, self.row, 1, 'Документ')
-        self.__set_cell(ws, self.row, 2, 'Таблица')
-        self.__set_cell(ws, self.row, 3, 'Строка')
-        self.__set_cell(ws, self.row, 4, 'Посещения')
-        self.__set_cell(ws, self.row, 5, 'Практика')
-        self.__set_cell(ws, self.row, 6, 'Семинар')
-        self.__set_cell(ws, self.row, 7, 'Лабор.')
-        self.__set_cell(ws, self.row, 8, 'КРА')
-        self.__set_cell(ws, self.row, 9, 'КРД')
-        self.__set_cell(ws, self.row, 10, 'МКТ')
-        self.__set_cell(ws, self.row, 11, 'Сумма')
+        self.__set_cell(ws, self.row, 2, 'Строка')
+        self.__set_cell(ws, self.row, 3, 'Посещения')
+        self.__set_cell(ws, self.row, 4, 'Практика')
+        self.__set_cell(ws, self.row, 5, 'Семинар')
+        self.__set_cell(ws, self.row, 6, 'Лабор.')
+        self.__set_cell(ws, self.row, 7, 'КРА')
+        self.__set_cell(ws, self.row, 8, 'КРД')
+        self.__set_cell(ws, self.row, 9, 'МКТ')
+        self.__set_cell(ws, self.row, 10, 'Сумма')
         self.row += 1
         return wb
 
     def __append(self, name, row, marks):
         ws: Worksheet = self.book.active
         self.__set_cell(ws, self.row, 1, name)
-        self.__set_cell(ws, self.row, 2, self.__marks_sheet_name)
-        self.__set_cell(ws, self.row, 3, row)
+        self.__set_cell(ws, self.row, 2, row)
 
-        for c, v in zip(range(4, len(marks) + 4), marks):
+        for c, v in zip(range(3, len(marks) + 3), marks):
             self.__set_cell(ws, self.row, c, v)
         self.__set_cell(ws, self.row, c + 1, sum(marks))
         self.row += 1

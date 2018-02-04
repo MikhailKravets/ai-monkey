@@ -34,11 +34,13 @@ def run(dist):
         marks = sess.run(nn, feed_dict={x: hours})[0]
         truncate(hours[0], marks)
         s = sum(marks)
-        marks = ' '.join([str(round(v / s * 100 * config.MULTIPLIER) / 100) for v in marks])
+        marks = [round(v / s * 100 * config.MULTIPLIER) / 100 for v in marks]
 
+        labels = ['Посещения', 'Практика', 'Семинар', 'Лабор.', 'КРА', 'КРД', 'МКТ']
         print()
-        print(f"For hours dist.: {' '.join([str(v) for v in hours[0]])}")
-        print(f"Calc. marks: {marks}")
+        print(f"For hours dist.: {' '.join([str(v) for v in hours[0]])}\n")
+        m = '\n'.join([f"{l:>9}: {v:05.2f}" for l, v in zip(labels, marks)])
+        print(m)
 
 
 if __name__ == '__main__':

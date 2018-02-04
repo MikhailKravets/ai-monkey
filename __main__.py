@@ -85,7 +85,7 @@ class Retriever:
         ws: Worksheet = wb.active
         ws.title = 'Расчет оценок'
         ws.column_dimensions['A'].width = 34
-        ws.column_dimensions['B'].width = 24
+        ws.column_dimensions['B'].width = 12
 
         self.__set_cell(ws, self.row, 1, 'Документ')
         self.__set_cell(ws, self.row, 2, 'Строка')

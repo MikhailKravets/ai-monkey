@@ -91,7 +91,7 @@ def run(in_, out):
     Example
     *******
 
-    ``python retriever.py c:/container/ d:/data.csv``
+    ``python retriever.py c:/container/ --out=d:/data.csv``
 
     """
     paths = []

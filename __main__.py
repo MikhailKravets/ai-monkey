@@ -168,7 +168,7 @@ def run(in_, out):
 
     .. code::
 
-        python ai-monkey c:/container/ d:/data.csv
+        python ai-monkey c:/container/ --out=d:/data.csv
 
     """
     if not os.path.exists(os.path.dirname(out)):
